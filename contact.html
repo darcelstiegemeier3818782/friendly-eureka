@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact · Techy Static PWA</title>
+  <meta name="description" content="Get in touch." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="main.js"></script>
+</head>
+<body class="theme-auto">
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Home">
+        <span class="brand-mark" aria-hidden="true">◇</span>
+        <span class="brand-text">Techy Static PWA</span>
+      </a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">Toggle navigation</span>
+        ☰
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="contrast.html">Contrast</a></li>
+          <li><a href="search.html">Search</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button id="themeToggle" class="btn btn-ghost" aria-label="Toggle theme">🌓</button>
+        <a class="btn" href="https://github.com/new" target="_blank" rel="noopener">Fork on GitHub</a>
+      </div>
+    </div>
+  </header>
+  <main id="content" class="container">
+
+  <h1>Contact</h1>
+  <div class="card">
+    <form class="form-grid" onsubmit="event.preventDefault(); alert('Thanks! This demo does not send email.');">
+      <label>Name<input type="text" required></label>
+      <label>Email<input type="email" required></label>
+      <label>Message<textarea rows="6" required></textarea></label>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Send</button>
+        <button class="btn" type="reset">Reset</button>
+      </div>
+    </form>
+  </div>
+  <p class="muted">This is a demo. Form submissions are not transmitted.</p>
+
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Techy Static PWA · Built with semantic HTML, accessible CSS, and vanilla JS.</p>
+      <p><a href="manifest.json">manifest.json</a> · <a href="sw.js">sw.js</a> · <a href="README.md">README</a></p>
+    </div>
+  </footer>
+</body>
+</html>
+

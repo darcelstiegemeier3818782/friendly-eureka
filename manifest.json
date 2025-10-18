@@ -1,0 +1,10 @@
+{
+  "name": "Techy Static PWA",
+  "short_name": "TechyPWA",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#0f172a",
+  "description": "A beautiful multi-page static site with PWA, client-side search, and a WCAG contrast checker."
+}

